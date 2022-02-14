@@ -10,10 +10,15 @@ import 'package:very_good_slide_puzzle/theme/themes/themes.dart';
 /// {@endtemplate}
 class SimpleTheme extends PuzzleTheme {
   /// {@macro simple_theme}
-  const SimpleTheme() : super();
+
+  const SimpleTheme({required this.flavour,
+    this.func,}): super();
+
+  final String flavour;
+  final Function(int)? func;
 
   @override
-  String get name => 'Simple';
+  String get name => flavour;
 
   @override
   bool get hasTimer => false;

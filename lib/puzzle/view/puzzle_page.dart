@@ -44,8 +44,9 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeBloc(
             initialThemes: [
-              const SimpleTheme(),
-              context.read<DashatarThemeBloc>().state.theme,
+              SimpleTheme(flavour: 'Simple', func: (int val) => val),
+              SimpleTheme(flavour: 'Pow', func: (int val) => val*val ),
+              //context.read<DashatarThemeBloc>().state.theme,
             ],
           ),
         ),
@@ -94,7 +95,7 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc(4) // can change tile numbers here
                   ..add(
                     PuzzleInitialized(
                       shufflePuzzle: shufflePuzzle,

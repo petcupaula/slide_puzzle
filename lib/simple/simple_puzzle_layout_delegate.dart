@@ -292,8 +292,8 @@ class SimplePuzzleBoard extends StatelessWidget {
 }
 
 abstract class _TileFontSize {
-  static double small = 36;
-  static double medium = 50;
+  static double small = 20;
+  static double medium = 40;
   static double large = 54;
 }
 
@@ -324,6 +324,13 @@ class SimplePuzzleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
+    // Change the tile display text depending on function provided to the puzzle
+    final simpleTheme = theme as SimpleTheme;
+    Function(int) func = (int i) => i;
+    if(simpleTheme.func != null) {
+      func = simpleTheme.func!;
+    }
+
     return TextButton(
       style: TextButton.styleFrom(
         primary: PuzzleColors.white,
@@ -353,7 +360,7 @@ class SimplePuzzleTile extends StatelessWidget {
           ? () => context.read<PuzzleBloc>().add(TileTapped(tile))
           : null,
       child: Text(
-        tile.value.toString(),
+        func(tile.value).toString(),
         semanticsLabel: context.l10n.puzzleTileLabelText(
           tile.value.toString(),
           tile.currentPosition.x.toString(),
