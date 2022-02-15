@@ -114,14 +114,14 @@ class _DashatarShareDialogState extends State<DashatarShareDialog>
                                       child: const DashatarScore(),
                                     ),
                                   ),
-                                  const ResponsiveGap(
-                                    small: 40,
-                                    medium: 40,
-                                    large: 80,
-                                  ),
-                                  DashatarShareYourScore(
-                                    animation: animation,
-                                  ),
+                                  // const ResponsiveGap(
+                                  //   small: 40,
+                                  //   medium: 40,
+                                  //   large: 80,
+                                  // ),
+                                  // DashatarShareYourScore(
+                                  //   animation: animation,
+                                  // ),
                                 ],
                               );
                             },

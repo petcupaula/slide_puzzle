@@ -74,23 +74,11 @@ class DashatarScore extends StatelessWidget {
             color: theme.backgroundColor,
             child: Stack(
               children: [
-                Positioned(
-                  left: imageOffset.dx,
-                  top: imageOffset.dy,
-                  child: Image.asset(
-                    theme.successThemeAsset,
-                    height: imageHeight,
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const AppFlutterLogo(
-                        height: 18,
-                        isColored: false,
-                      ),
                       const ResponsiveGap(
                         small: 24,
                         medium: 32,
@@ -98,7 +86,6 @@ class DashatarScore extends StatelessWidget {
                       ),
                       SizedBox(
                         key: const Key('dashatar_score_completed'),
-                        width: completedTextWidth,
                         child: AnimatedDefaultTextStyle(
                           style: PuzzleTextStyle.headline5.copyWith(
                             color: theme.defaultColor,
@@ -142,7 +129,7 @@ class DashatarScore extends StatelessWidget {
                         textStyle: timerTextStyle,
                         iconSize: timerIconSize,
                         iconPadding: timerIconPadding,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                       ),
                       const ResponsiveGap(
                         small: 2,
