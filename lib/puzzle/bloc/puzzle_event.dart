@@ -10,9 +10,14 @@ abstract class PuzzleEvent extends Equatable {
 }
 
 class PuzzleInitialized extends PuzzleEvent {
-  const PuzzleInitialized({required this.shufflePuzzle});
+  PuzzleInitialized({required this.shufflePuzzle,
+    this.size = 4,
+    this.func});
 
   final bool shufflePuzzle;
+
+  int size;
+  int Function(int)? func;
 
   @override
   List<Object> get props => [shufflePuzzle];

@@ -18,13 +18,19 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
 
   final int _size;
 
+  var selFunc = (int i) => i;
+  int selSize = 3;
+
   final Random? random;
 
   void _onPuzzleInitialized(
     PuzzleInitialized event,
     Emitter<PuzzleState> emit,
   ) {
-    final puzzle = _generatePuzzle(_size, shuffle: event.shufflePuzzle);
+    selFunc = event.func ?? (int i) => i;
+    selSize = event.size;
+    print("puzzle init | func: $selFunc | size: $selSize");
+    final puzzle = _generatePuzzle(selSize, selFunc, shuffle: event.shufflePuzzle);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
@@ -74,7 +80,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   void _onPuzzleReset(PuzzleReset event, Emitter<PuzzleState> emit) {
-    final puzzle = _generatePuzzle(_size);
+    final puzzle = _generatePuzzle(selSize, selFunc);
     emit(
       PuzzleState(
         puzzle: puzzle.sort(),
@@ -84,7 +90,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
   }
 
   /// Build a randomized, solvable puzzle of the given size.
-  Puzzle _generatePuzzle(int size, {bool shuffle = true}) {
+  Puzzle _generatePuzzle(int size, int Function(int) func, {bool shuffle = true}) {
     final correctPositions = <Position>[];
     final currentPositions = <Position>[];
     final whitespacePosition = Position(x: size, y: size);
@@ -112,6 +118,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
       size,
       correctPositions,
       currentPositions,
+            func
     );
 
     var puzzle = Puzzle(tiles: tiles);
@@ -125,6 +132,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
           size,
           correctPositions,
           currentPositions,
+          func
         );
         puzzle = Puzzle(tiles: tiles);
       }
@@ -139,20 +147,21 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     int size,
     List<Position> correctPositions,
     List<Position> currentPositions,
+    int Function(int) func
   ) {
     final whitespacePosition = Position(x: size, y: size);
     return [
       for (int i = 1; i <= size * size; i++)
         if (i == size * size)
           Tile(
-            value: i,
+            value: func(i),
             correctPosition: whitespacePosition,
             currentPosition: currentPositions[i - 1],
             isWhitespace: true,
           )
         else
           Tile(
-            value: i,
+            value: func(i),
             correctPosition: correctPositions[i - 1],
             currentPosition: currentPositions[i - 1],
           )

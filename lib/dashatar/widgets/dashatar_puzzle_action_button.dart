@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,14 @@ class DashatarPuzzleActionButton extends StatefulWidget {
 class _DashatarPuzzleActionButtonState
     extends State<DashatarPuzzleActionButton> {
   late final AudioPlayer _audioPlayer;
+
+  final List<int Function(int)> _funcs = [
+        (int i) => i,
+        (int i) => i*i,
+        (int i) => i*2
+  ]
+  ;
+  final List<int> _sizes = [3, 4, 5];
 
   @override
   void initState() {
@@ -86,8 +95,11 @@ class _DashatarPuzzleActionButtonState
                     // (unshuffled) before the countdown completes.
                     if (hasStarted) {
                       context.read<PuzzleBloc>().add(
-                            const PuzzleInitialized(shufflePuzzle: false),
+                            PuzzleInitialized(shufflePuzzle: false,
+                                size: _sizes[Random().nextInt(_sizes.length)],
+                                func: _funcs[Random().nextInt(_funcs.length)]),
                           );
+                      //print("PuzzleInitialized");
                     }
 
                     unawaited(_audioPlayer.replay());
