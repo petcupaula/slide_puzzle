@@ -28,8 +28,8 @@ class DashatarStartSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ResponsiveGap(
-          small: 20,
-          medium: 83,
+          small: 0,
+          medium: 0,
           large: 151,
         ),
         PuzzleName(

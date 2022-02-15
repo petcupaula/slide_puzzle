@@ -43,11 +43,6 @@ class DashatarPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
           small: 32,
           medium: 54,
         ),
-        ResponsiveLayoutBuilder(
-          small: (_, child) => const DashatarThemePicker(),
-          medium: (_, child) => const DashatarThemePicker(),
-          large: (_, child) => const SizedBox(),
-        ),
         const ResponsiveGap(
           small: 32,
           medium: 54,
@@ -68,7 +63,7 @@ class DashatarPuzzleLayoutDelegate extends PuzzleLayoutDelegate {
       child: ResponsiveLayoutBuilder(
         small: (_, child) => const SizedBox(),
         medium: (_, child) => const SizedBox(),
-        large: (_, child) => const DashatarThemePicker(),
+        large: (_, child) => const SizedBox(),
       ),
     );
   }

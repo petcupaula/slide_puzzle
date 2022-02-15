@@ -30,8 +30,8 @@ class PuzzlePage extends StatelessWidget {
           create: (_) => DashatarThemeBloc(
             themes: const [
               BlueDashatarTheme(),
-              GreenDashatarTheme(),
-              YellowDashatarTheme()
+              //GreenDashatarTheme(),
+              //YellowDashatarTheme()
             ],
           ),
         ),
@@ -44,9 +44,9 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeBloc(
             initialThemes: [
-              SimpleTheme(flavour: 'Simple', func: (int val) => val),
-              SimpleTheme(flavour: 'Pow', func: (int val) => val*val ),
-              //context.read<DashatarThemeBloc>().state.theme,
+              //SimpleTheme(flavour: 'Simple', func: (int val) => val),
+              //SimpleTheme(flavour: 'Pow', func: (int val) => val*val ),
+              context.read<DashatarThemeBloc>().state.theme,
             ],
           ),
         ),
@@ -161,12 +161,8 @@ class PuzzleHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 96,
-      child: ResponsiveLayoutBuilder(
-        small: (context, child) => Stack(
+      child: Stack(
           children: [
-            const Align(
-              child: PuzzleLogo(),
-            ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -175,32 +171,7 @@ class PuzzleHeader extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        medium: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
-            ],
-          ),
-        ),
-        large: (context, child) => Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 50,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              PuzzleLogo(),
-              PuzzleMenu(),
-            ],
-          ),
-        ),
-      ),
+        )
     );
   }
 }
@@ -240,7 +211,6 @@ class PuzzleSections extends StatelessWidget {
       small: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleMenu(),
           const PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],

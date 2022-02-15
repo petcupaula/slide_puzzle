@@ -11,11 +11,18 @@ import 'package:very_good_slide_puzzle/layout/layout.dart';
 import 'package:very_good_slide_puzzle/models/models.dart';
 import 'package:very_good_slide_puzzle/puzzle/puzzle.dart';
 import 'package:very_good_slide_puzzle/theme/themes/themes.dart';
+import '../../theme/widgets/puzzle_button.dart';
 
 abstract class _TileSize {
   static double small = 75;
   static double medium = 100;
   static double large = 112;
+}
+
+abstract class _TileFontSize {
+  static double small = 20;
+  static double medium = 40;
+  static double large = 50;
 }
 
 /// {@template dashatar_puzzle_tile}
@@ -142,22 +149,21 @@ class DashatarPuzzleTileState extends State<DashatarPuzzleTile>
             child: ScaleTransition(
               key: Key('dashatar_puzzle_tile_scale_${widget.tile.value}'),
               scale: _scale,
-              child: IconButton(
-                padding: EdgeInsets.zero,
+              child: PuzzleButton(
                 onPressed: canPress
                     ? () {
                         context.read<PuzzleBloc>().add(TileTapped(widget.tile));
                         unawaited(_audioPlayer?.replay());
                       }
                     : null,
-                icon: Image.asset(
-                  theme.dashAssetForTile(widget.tile),
-                  semanticLabel: context.l10n.puzzleTileLabelText(
-                    widget.tile.value.toString(),
-                    widget.tile.currentPosition.x.toString(),
-                    widget.tile.currentPosition.y.toString(),
-                  ),
-                ),
+                child: ResponsiveLayoutBuilder(
+                    small: (_, child) => Text(widget.tile.value.toString(),
+                      style: TextStyle(fontSize: _TileFontSize.small),),
+                    medium: (_, child) => Text(widget.tile.value.toString(),
+                      style: TextStyle(fontSize: _TileFontSize.medium),),
+                    large: (_, child) => Text(widget.tile.value.toString(),
+                      style: TextStyle(fontSize: _TileFontSize.large),),
+              ),
               ),
             ),
           ),
